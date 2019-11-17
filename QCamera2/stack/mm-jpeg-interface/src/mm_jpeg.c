@@ -2413,19 +2413,6 @@ int32_t mm_jpeg_init(mm_jpeg_obj *my_obj)
   }
   LOGD("IS lib2d_Enable %d", my_obj->is_lib2d_enable);
 
-  if (my_obj->is_lib2d_enable) {
-    cam_format_t lib2d_format;
-    LOGD("Enable lib2d rotation");
-    lib2d_error lib2d_err = MM_LIB2D_SUCCESS;
-    lib2d_format =
-      mm_jpeg_get_imgfmt_from_colorfmt(MM_JPEG_COLOR_FORMAT_YCRCBLP_H2V2);
-    lib2d_err = mm_lib2d_init(MM_LIB2D_SYNC_MODE, lib2d_format,
-    lib2d_format, &my_obj->static_lib2d_handle);
-    if (lib2d_err != MM_LIB2D_SUCCESS) {
-      LOGE("lib2d init for rotation failed\n");
-      my_obj->static_lib2d_handle = NULL;
-    }
-  }
 
 
   return rc;
@@ -2448,13 +2435,7 @@ int32_t mm_jpeg_deinit(mm_jpeg_obj *my_obj)
   int32_t rc = 0;
   uint32_t i = 0;
 
-  if (my_obj->is_lib2d_enable) {
-    lib2d_error lib2d_err = MM_LIB2D_SUCCESS;
-    lib2d_err = mm_lib2d_deinit(my_obj->static_lib2d_handle);
-    if (lib2d_err != MM_LIB2D_SUCCESS) {
-      LOGE("Error in mm_lib2d_deinit \n");
-    }
-  }
+
 
   /* release jobmgr thread */
   rc = mm_jpeg_jobmgr_thread_release(my_obj);
@@ -2583,7 +2564,6 @@ lib2d_error mm_jpeg_lib2d_rotation_cb(void *userdata, int jobid)
 int32_t mm_jpeg_lib2d_rotation(mm_jpeg_job_session_t *p_session,
   mm_jpeg_job_q_node_t* p_node, mm_jpeg_job_t *p_job, uint32_t *p_job_id)
 {
-  lib2d_error lib2d_err = MM_LIB2D_SUCCESS;
   mm_lib2d_buffer src_buffer;
   mm_lib2d_buffer dst_buffer;
   mm_jpeg_buf_t *p_src_main_buf = p_session->params.src_main_buf;
@@ -2735,13 +2715,7 @@ int32_t mm_jpeg_lib2d_rotation(mm_jpeg_job_session_t *p_session,
 
   LOGD(" lib2d rotation = %d\n", p_session->params.rotation);
 
-  lib2d_err = mm_lib2d_start_job(p_session->lib2d_handle, &src_buffer,
-    &dst_buffer, *p_job_id, NULL, mm_jpeg_lib2d_rotation_cb,
-    p_session->params.rotation);
-  if (lib2d_err != MM_LIB2D_SUCCESS) {
-    LOGE("Error in mm_lib2d_start_job \n");
-    return -1;
-  }
+
 
   buffer_clean(&p_session->src_rot_ion_buffer[p_jobparams->src_index]);
 
@@ -2863,8 +2837,8 @@ int32_t mm_jpeg_start_job(mm_jpeg_obj *my_obj,
   node->enc_info.encode_job = job->encode_job;
   if (my_obj->is_lib2d_enable) {
     if (p_session->lib2d_rotation_flag) {
-      rc = mm_jpeg_lib2d_rotation(p_session, node, job, job_id);
-      LOGH("Lib2d rotation done %d", rc);
+//       rc = mm_jpeg_lib2d_rotation(p_session, node, job, job_id);
+//       LOGH("Lib2d rotation done %d", rc);
       if (rc < 0) {
         LOGE("Lib2d rotation failed");
         return rc;
