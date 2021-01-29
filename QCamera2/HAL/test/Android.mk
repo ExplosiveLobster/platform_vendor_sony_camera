@@ -23,7 +23,7 @@ ifneq (1,$(filter 1,$(shell echo "$$(( $(PLATFORM_SDK_VERSION) >= 18 ))" )))
 
 LOCAL_SHARED_LIBRARIES += \
     libmedia_native
-ifneq (,$(filter $(strip $(SOMC_KERNEL_VERSION)),4.9 4.14))
+ifneq (,$(filter $(strip $(TARGET_KERNEL_VERSION)),4.9 4.14))
 LOCAL_SHARED_LIBRARIES += libion
 endif
 LOCAL_32_BIT_ONLY := $(BOARD_QTI_CAMERA_32BIT_ONLY)

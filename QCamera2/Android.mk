@@ -109,7 +109,7 @@ LOCAL_C_INCLUDES := \
         $(SRC_MEDIA_HAL_DIR)/libstagefrighthw \
         $(SRC_MEDIA_HAL_DIR)/mm-core/inc
 
-ifneq (,$(filter $(strip $(SOMC_KERNEL_VERSION)),4.9 4.14))
+ifneq (,$(filter $(strip $(TARGET_KERNEL_VERSION)),4.9 4.14))
 LOCAL_C_INCLUDES += \
         system/core/libion/kernel-headers \
         system/core/libion/include
@@ -155,7 +155,7 @@ LOCAL_SHARED_LIBRARIES := liblog libhardware libutils libcutils libdl libsync
 LOCAL_SHARED_LIBRARIES += libmmcamera_interface libmmjpeg_interface libui libcamera_metadata
 LOCAL_SHARED_LIBRARIES += libqdMetaData libqservice libbinder
 LOCAL_SHARED_LIBRARIES += libbase libcutils libdl libhal_dbg
-ifneq (,$(filter $(strip $(SOMC_KERNEL_VERSION)),4.9 4.14))
+ifneq (,$(filter $(strip $(TARGET_KERNEL_VERSION)),4.9 4.14))
 LOCAL_SHARED_LIBRARIES += libion
 endif
 ifeq ($(USE_DISPLAY_SERVICE),true)

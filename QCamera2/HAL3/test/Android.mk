@@ -13,7 +13,7 @@ else
     LOCAL_CFLAGS += -DCAMERA_CHIPSET_8937
 endif
 
-ifneq (,$(filter $(strip $(SOMC_KERNEL_VERSION)),4.9 4.14))
+ifneq (,$(filter $(strip $(TARGET_KERNEL_VERSION)),4.9 4.14))
 LOCAL_C_INCLUDES += \
         system/core/libion/kernel-headers \
         system/core/libion/include
@@ -43,7 +43,7 @@ LOCAL_SRC_FILES := \
     QCameraHAL3Test.cpp
 
 LOCAL_SHARED_LIBRARIES:= libutils liblog libcamera_metadata libcutils
-ifneq (,$(filter $(strip $(SOMC_KERNEL_VERSION)),4.9 4.14))
+ifneq (,$(filter $(strip $(TARGET_KERNEL_VERSION)),4.9 4.14))
 LOCAL_SHARED_LIBRARIES += libion
 endif
 

@@ -30,7 +30,7 @@ LOCAL_CFLAGS += -DSYSTEM_HEADER_PREFIX=sys
 
 OMX_CORE_DIR := $(MM_JPEG_TEST_PATH)/../../../../mm-image-codec
 
-ifneq (,$(filter $(strip $(SOMC_KERNEL_VERSION)),4.9 4.14))
+ifneq (,$(filter $(strip $(TARGET_KERNEL_VERSION)),4.9 4.14))
 LOCAL_C_INCLUDES := \
     $(TOP)/system/core/libion/include \
     $(TOP)/system/core/libion/kernel-headers
@@ -80,7 +80,7 @@ LOCAL_CFLAGS += -DSYSTEM_HEADER_PREFIX=sys
 
 OMX_CORE_DIR := $(MM_JPEG_TEST_PATH)/../../../../mm-image-codec
 
-ifneq (,$(filter $(strip $(SOMC_KERNEL_VERSION)),4.9 4.14))
+ifneq (,$(filter $(strip $(TARGET_KERNEL_VERSION)),4.9 4.14))
 LOCAL_C_INCLUDES := \
     $(TOP)/system/core/libion/include \
     $(TOP)/system/core/libion/kernel-headers
